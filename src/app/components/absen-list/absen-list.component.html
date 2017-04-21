@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 style="margin-top:0px">Absen List</h2>
+    </div>
+    <div class="col-md-6 text-right">
+      <my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]="model" (dateChanged)="onDateChanged($event)" required>
+      </my-date-picker>
+    </div>
+  </div>
+  <div style="margin-top: 10px">
+    <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns">
+    </ng-table>
+  </div>
+  <div *ngIf="loading" class="text-center">
+    <spinner [size]="100" [tickness]="10"></spinner>
+  </div>
+
+  <alert type="danger" class="text-center" *ngIf="errorMessage"><b>{{errorMessage}}</b></alert>
+
+  <div class="container-fluid" style="margin-top: 10px">
+    <div class="row">
+      <div class="col-md-6 pagination">
+        <a href="#" class="btn btn-primary">Total Record : {{length}}</a>
+      </div>
+      <div class="col-md-6 text-right " style="padding: 0px">
+        <pagination *ngIf="config.paging" style="margin: 0px" class="pagination" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+          [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>
