@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Sales } from '../models/sales';
 import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -24,10 +23,7 @@ export class AuthService {
 
   
   login(username: string, password: string): Observable<Sales> {
-    let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    let body = `username=${username}&password=${password}`;
-
-    return this.http.post(this.authUrl, body, { headers: headers })
+    return this.http.post(this.authUrl, {username,password})
       .map(res => res.json().user)
       .do(res => {
           localStorage.setItem('userInfo', JSON.stringify(res));
