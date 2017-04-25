@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { SpinnerModule } from 'angular2-spinner/dist';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
-import { PaginationModule, AlertModule } from 'ngx-bootstrap';
+import { PaginationModule, AlertModule, BsDropdownModule } from 'ngx-bootstrap';
 import { MyDatePickerModule } from 'mydatepicker';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
+import { ManageUserModule } from './modules/manage-user/manage-user.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,11 +35,13 @@ import { AuthGuard } from './guards/auth.guard';
     HomeComponent
   ],
   imports: [
+    ManageUserModule,
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
     Ng2TableModule,
+    BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
     AlertModule.forRoot(),
     SpinnerModule,

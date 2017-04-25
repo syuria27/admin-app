@@ -6,6 +6,19 @@
     </div>
     <ul class="nav navbar-nav">
       <li [routerLinkActive]="['active']"><a routerLink="/home">Home</a></li>
+      <li style="cursor:pointer" [routerLinkActive]="['active']">
+        <a dropdown class="dropdown">
+          <div dropdownToggle class="dropdown-toggle">
+            Manage <span class="caret"></span>
+          </div>
+          <div *dropdownMenu class="dropdown-menu">
+            <li><a routerLink="/manage-user">User</a></li>
+            <li><a href="">Product</a></li>
+          </div>
+        </a>
+      </li>
+ 
+      
       <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/absen">Daily Absen</a></li>
       <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/sales">Absen By Sales</a></li>
     </ul>
