@@ -11,7 +11,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class SalesService {
 
-  private apiUrl: string = 'http://192.168.1.10/api';
+  private apiUrl: string = 'http://192.168.1.10/web-api';
 
   constructor(private http : Http, private auth: AuthService) { }
 
@@ -20,8 +20,8 @@ export class SalesService {
    */
    getAllSales(): Observable<Sales[]>{
      let sales: Sales = this.auth.getUserInfo();
-     return this.http.get(`${this.apiUrl}/users/${sales.depot}`)
-      .map(res => res.json().users)
+     return this.http.get(`${this.apiUrl}/sales/${sales.depot}`)
+      .map(res => res.json().sales)
       .catch(this.handleError);
    }
 
@@ -30,8 +30,8 @@ export class SalesService {
     */
     getSales(kode_spg: string): Observable<Sales> {
       let sales: Sales = this.auth.getUserInfo();
-      return this.http.get(`${this.apiUrl}/user/${sales.depot}/${kode_spg}`)
-        .map(res => res.json().user)
+      return this.http.get(`${this.apiUrl}/sales/${sales.depot}/${kode_spg}`)
+        .map(res => res.json().sales)
         .catch(this.handleError);
     }
 

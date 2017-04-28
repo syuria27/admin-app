@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ManageUserService {
 
-  private apiUrl: string = 'http://localhost:3000/api';
+  private apiUrl: string = 'http://localhost:3000/api/manage';
 
   constructor(private http : Http) { }
 
@@ -14,7 +14,7 @@ export class ManageUserService {
    * Get All User
    */
   getAllUsers(): Observable<User[]>{
-    return this.http.get(`${this.apiUrl}/users/ADMIN`)
+    return this.http.get(`${this.apiUrl}/users`)
       .map(res => res.json().users)
       .map(users => {
         return users.map(user =>{
@@ -44,6 +44,52 @@ export class ManageUserService {
         });
       })
       .catch(this.handleError);
+  }
+
+  /**
+   * Create User
+   */
+  createUser(user: User): Observable<any>{
+    return this.http.post(`${this.apiUrl}/create/user`, user)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  /**
+   * Update User
+   */
+  updateUser(user: User): Observable<any>{
+    return this.http.put(`${this.apiUrl}/update/user`, user)
+    .map(res => res.json())
+    .catch(this.handleError);
+  }
+
+  /**
+   * Update Password
+   */
+  updatePassword(kode_spg: string, password: string): Observable<any>{
+    return this.http.put(`${this.apiUrl}/user/password`, {kode_spg, password})
+    .map(res => res.json())
+    .catch(this.handleError);
+  }
+
+  /**
+   * Update Status
+   */
+  updateStatus(kode_spg: string, status: number): Observable<any>{
+    return this.http.put(`${this.apiUrl}/user/password`, {kode_spg, status})
+    .map(res => res.json())
+    .catch(this.handleError);
+  }
+
+
+  /**
+    * Get Sales
+    */
+  getUser(kode_spg: string): Observable<User> {
+      return this.http.get(`${this.apiUrl}/user/${kode_spg}`)
+        .map(res => res.json().user)
+        .catch(this.handleError);
   }
 
   /**

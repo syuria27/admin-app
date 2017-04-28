@@ -10,7 +10,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AuthService {
-  private authUrl: string = 'http://192.168.1.10/api/login';
+  private authUrl: string = 'http://192.168.1.10/web-api/login';
   private loggedIn: boolean = false;
   
   constructor(private http: Http) {

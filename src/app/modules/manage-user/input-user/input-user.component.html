@@ -1,3 +1,58 @@
-<p>
-  input-user works!
-</p>
+<div class="container-fluid col-md-4">
+  <h2>Create User</h2>
+  <hr>
+  <form (ngSubmit)="createUser()" #form="ngForm">
+
+    <div class="form-group">
+      <label for="nama_spg" class="control-label">Nama SPG</label>
+      <input [(ngModel)]="user.nama_spg" type="text" name="nama_spg" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="nama_toko" class="control-label">Nama Toko</label>
+      <input [(ngModel)]="user.nama_toko" type="text" name="nama_toko" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="depot" class="control-label">Depot</label>
+      <input [(ngModel)]="user.depot" type="text" name="depot" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label>Zona</label>
+      <select name="zona" class="form-control" [(ngModel)]="user.zona">
+        <option *ngFor="let zona of zonas" [ngValue]="zona.value"
+          [selected]="user.zona === zona.value ">{{zona.display}}
+        </option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label>Hak Akses</label><br>
+          <div *ngFor="let akses of hak_akses" class="form-group radio-inline">
+            <label class="radio-inline">
+              <input type="radio" name="hak_akses" [value]="akses.value"
+                [(ngModel)]="user.hak_akses" [checked]="user.hak_akses === akses.value "> {{akses.display}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1 text-right top15">
+        <div *ngIf="loading" class="input-group">
+          <spinner [size]="30" [tickness]="10"></spinner>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="text-right top15">
+          <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let alert of alerts">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+    </div>
+  </form>
+</div>

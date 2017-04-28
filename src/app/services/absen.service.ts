@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AbsenService {
-  private apiUrl: string = 'http://192.168.1.10/api/absen';
+  private apiUrl: string = 'http://192.168.1.10/web-api/absen';
   
   constructor(private http : Http, private auth: AuthService) { }
 

@@ -1,3 +1,70 @@
-<p>
-  edit-user works!
-</p>
+<alert type="danger" class="text-center" *ngIf="errorMessage"><b>{{errorMessage}}</b></alert>
+<div *ngIf="loadingUser" class="text-center">
+    <spinner [size]="100" [tickness]="10"></spinner>
+</div>
+<div class="container-fluid col-md-4" *ngIf="user.kode_spg">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>{{user.kode_spg}}</h2>
+    </div>
+    <div class="col-md-4 text-right">
+      <button class="btn btn-danger top15" *ngIf="user.status">
+          <span class="glyphicon glyphicon-remove"></span> Non Active 
+      </button>
+      <button class="btn btn-success top15" *ngIf="!user.status">
+          <span class="glyphicon glyphicon-ok"></span> Active 
+      </button>
+    </div>
+  </div>
+  <hr>
+  <form #form="ngForm">
+
+    <div class="form-group">
+      <label for="nama_spg" class="control-label">Nama SPG</label>
+      <input [(ngModel)]="user.nama_spg" type="text" name="nama_spg" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="nama_toko" class="control-label">Nama Toko</label>
+      <input [(ngModel)]="user.nama_toko" type="text" name="nama_toko" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="depot" class="control-label">Depot</label>
+      <input [(ngModel)]="user.depot" type="text" name="depot" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label>Zona</label>
+      <select name="zona" class="form-control" [(ngModel)]="user.zona">
+        <option *ngFor="let zona of zonas" [ngValue]="zona.value"
+          [selected]="user.zona === zona.value ">{{zona.display}}
+        </option>
+      </select>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="password" class="control-label">Password</label>
+      <input [(ngModel)]="password" type="text" name="password" class="form-control">
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+          <button (click)="updatePassword()" class="btn btn-warning btn-width-100" type="submit" [disabled]="!password">Update Password</button>
+      </div>
+      <div class="col-md-2 text-center">
+        <div *ngIf="loading">
+          <spinner [size]="33" [tickness]="10"></spinner>
+        </div>
+      </div>
+      <div class="col-md-5">
+          <button (click)="updateData()" class="btn btn-primary btn-width-100" type="submit" [disabled]="form.invalid">Update Data</button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+  </div>
+
+</div>

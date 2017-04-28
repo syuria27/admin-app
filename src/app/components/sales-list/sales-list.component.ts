@@ -159,6 +159,7 @@ export class SalesListComponent implements OnInit {
     this.loading = true;
     this.salesService.getAllSales()
       .subscribe(users =>{
+        console.log(users);
          this.data = users;
          this.length = this.data.length; // this is for pagination
          this.onChangeTable(this.config);

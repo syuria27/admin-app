@@ -25,7 +25,7 @@ export class ListUserComponent implements OnInit {
         buttons: [{
           name: 'edit',
           title: 'Edit',
-          styleClass: 'btn btn-primary',
+          styleClass: 'btn btn-warning',
           styleIcon: 'glyphicon glyphicon-pencil',
           action: 'onEdit'
         }]
