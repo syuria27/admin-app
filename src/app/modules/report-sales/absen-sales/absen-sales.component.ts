@@ -1,72 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { IMyOptions, IMyDateModel} from 'mydatepicker';
-import { Absen } from '../../models/absen';
-import { AbsenService } from '../../services/absen.service';
-import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { SalesService } from '../../../services/sales.service';
+import { AbsenService } from '../../../services/absen.service';
+import { Sales } from '../../../models/sales';
+import { Absen } from '../../../models/absen';
 
 @Component({
-  selector: 'app-absen-list',
-  templateUrl: './absen-list.component.html',
+  selector: 'app-absen-sales',
+  templateUrl: './absen-sales.component.html',
   styles: []
 })
-export class AbsenListComponent implements OnInit {
+export class AbsenSalesComponent implements OnInit {
+  sales: Sales;
   errorMessage: string;
-  loading: boolean = false;
-  date = new Date();
-  linkExport: string = `http://localhost:81/report/export/absen_by_tanggal/${this.sales.depot}`;
-  
-  myDatePickerOptions: IMyOptions = {
-        editableMonthAndYear: false,
-        showClearDateBtn: false,
-        minYear: 2016,
-        width: '252px',
-        editableDateField: false,
-        dateFormat: 'dd - mm - yyyy',
-  };
+  errorMessageSales: string;
+  loadingSales: boolean = false;
+  loadingAbsen: boolean = false;
+  linkExport:string = 'http://localhost:81/report/export/absen_by_uid';
 
-  model = { date: { 
-      year: this.date.getFullYear(), 
-      month: this.date.getMonth() + 1, 
-      day: this.date.getDate() 
-    } 
-  };
-  
-  onDateChanged(event: IMyDateModel) {
-    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
-    this.refresh();
-    this.absenService.getDailyAbsen(`${event.date.year}-${event.date.month}-${event.date.day}`)
-      .subscribe(
-        abs =>{
-          this.data = abs;
-          this.length = this.data.length; // this is for pagination
-          this.onChangeTable(this.config);
-          this.loading = false;
-          this.errorMessage = '';
-        },error => {
-            this.errorMessage = error;
-            this.length = this.data.length; // this is for pagination
-            this.onChangeTable(this.config);
-            this.loading = false;
-        }
-      );
-  }
-
-  refresh():void {
-    this.data = [];
-    this.length = this.data.length; // this is for pagination
-    this.onChangeTable(this.config);
-    this.loading = true;
-  }
+  mm: number = 0;
+  months = [
+    { val: 1,  name: 'Januari' },
+    { val: 2,  name: 'February' },
+    { val: 3,  name: 'Maret' },
+    { val: 4,  name: 'April' },
+    { val: 5,  name: 'Mei' },
+    { val: 6,  name: 'Juni' },
+    { val: 7,  name: 'Juli' },
+    { val: 8,  name: 'Agustus' },
+    { val: 9,  name: 'September' },
+    { val: 10,  name: 'Oktober' },
+    { val: 11,  name: 'November' },
+    { val: 12,  name: 'Desember' }
+  ];
+  years: number[] =[];
+  yy : number;
 
   public rows:Array<any> = [];
   public columns:Array<any> = [
     {title:'Kode Absen', name: 'kode_absen', className: ['text-center']},
     {title:'Selfie Masuk', name: 'selfie_masuk', className: ['text-center']},
     {title:'Selfie Pulang', name: 'selfie_pulang', className: ['text-center']},
-    {title: 'Nama SPG', name: 'nama_spg', className: ['text-center']},
-    {title: 'Nama Toko', name: 'nama_toko', className: ['text-center']},
-    {title: 'Depot', name: 'depot', className: ['text-center']},
-    //{title: 'Tanggal', name: 'tanggal', className: ['text-center']},
+    {title: 'Tanggal', name: 'tanggal', className: ['text-center']},
     {title: 'Jam Masuk', name: 'jam_masuk', className: ['text-center']},
     {title: 'Lokasi Masuk', name: 'lokasi_masuk', className: ['text-center']},
     {title: 'Jam Pulang', name: 'jam_pulang', className: ['text-center']},
@@ -86,32 +61,18 @@ export class AbsenListComponent implements OnInit {
   };
 
   private data:Array<Absen> = [];
-
-  constructor(private absenService: AbsenService, private auth: AuthService) {
+    
+  constructor(
+    private route: ActivatedRoute, 
+    private salesService: SalesService,
+    private absenService: AbsenService
+  ) { 
     this.length = this.data.length;
-   }
-
-  get sales(){
-    return this.auth.getUserInfo();
   }
 
   ngOnInit() {
-    this.refresh();
-    this.absenService.getDailyAbsen(`${this.model.date.year}-${this.model.date.month}-${this.model.date.day}`)
-      .subscribe(
-        abs =>{
-          this.data = abs;
-          this.length = this.data.length; // this is for pagination
-          this.onChangeTable(this.config);
-          this.loading = false;
-          this.errorMessage = '';
-        },error => {
-            this.errorMessage = error;
-            this.length = this.data.length; // this is for pagination
-            this.onChangeTable(this.config);
-            this.loading = false;
-        }
-      );
+    this.getMonthYear();
+    this.getSales();
   }
 
   public changePage(page:any, data:Array<any> = this.data):Array<any> {
@@ -205,5 +166,51 @@ export class AbsenListComponent implements OnInit {
   public onCellClick(data: any): any {
     console.log(data);
   }
-  
+
+  getSales(){
+    this.loadingSales = true;
+    let kode_spg = this.route.snapshot.params['kode_spg'];
+    this.salesService.getSales(kode_spg)
+      .subscribe(
+        sales => {
+          this.sales = sales;
+          this.loadingSales = false;
+        },error =>{
+           this.errorMessageSales = error;
+           this.loadingSales = false;
+        }
+      );
+  }
+
+  getMonthYear(){
+    var today = new Date();
+    this.mm = today.getMonth()+1;
+    this.yy = today.getFullYear();        
+    for(var i = (this.yy-10); i <= this.yy; i++){
+      this.years.push(i);
+    }
+  }
+
+  search() {
+    this.data = [];
+    this.length = this.data.length; // this is for pagination
+    this.onChangeTable(this.config);
+    this.loadingAbsen = true;
+    this.absenService.getSalesAbsen(this.sales.kode_spg, this.mm, this.yy)
+      .subscribe(
+        abs =>{
+          this.data = abs;
+          this.length = this.data.length; // this is for pagination
+          this.onChangeTable(this.config);
+          this.loadingAbsen = false;
+          this.errorMessage = '';
+        },error => {
+            this.errorMessage = error;
+            this.length = this.data.length; // this is for pagination
+            this.onChangeTable(this.config);
+            this.loadingAbsen = false;
+        }
+      );
+  }
+
 }

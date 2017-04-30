@@ -8,10 +8,10 @@
       <h2>{{user.kode_spg}}</h2>
     </div>
     <div class="col-md-4 text-right">
-      <button class="btn btn-danger top15" *ngIf="user.status">
+      <button (click)="nonActive()" class="btn btn-danger top15" *ngIf="user.status">
           <span class="glyphicon glyphicon-remove"></span> Non Active 
       </button>
-      <button class="btn btn-success top15" *ngIf="!user.status">
+      <button (click)="active()" class="btn btn-success top15" *ngIf="!user.status">
           <span class="glyphicon glyphicon-ok"></span> Active 
       </button>
     </div>
@@ -62,9 +62,7 @@
       </div>
     </div>
   </form>
-
-  <div *ngFor="let alert of alerts">
-    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
-  </div>
-
+  <br>
+  <alert type="danger" class="text-center" *ngIf="errorUpdate"><b>{{errorUpdate}}</b></alert>
+  <alert type="success" class="text-center" *ngIf="successUpdate"><b>{{successUpdate}}</b></alert>
 </div>

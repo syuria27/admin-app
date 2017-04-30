@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SalesService } from '../../services/sales.service';
-import { Sales } from '../../models/sales';
+import { SalesService } from '../../../services/sales.service';
+import { Sales } from '../../../models/sales';
 
 
 @Component({
@@ -19,18 +19,35 @@ export class SalesListComponent implements OnInit {
     {title: 'Nama SPG', name: 'nama_spg', className: ['text-center']},
     {title: 'Nama Toko', name: 'nama_toko', className: ['text-center']},
     {title: 'Depot', name: 'depot', className: ['text-center']},
-    //{title: 'Action', name: 'viewbutton',className: ['text-center col-md-1']},
-    {title: 'Action', name: 'actionSimple', className: ['text-center col-md-1'], 
-      classNameTd: ['text-center'], actions: {type: 'simple',
-        buttons: [{
-          name: 'view',
-          title: 'View',
-          styleClass: 'btn btn-info',
-          styleIcon: 'glyphicon glyphicon-search',
-          action: 'onView'
-        }]
+    {
+      title: 'Report',
+      name: 'actionGroup',
+      className: ['text-center col-md-2-5'], 
+      classNameTd: ['text-center'],
+      actions: {
+        type: 'group',
+        buttons: [
+          {
+            name: 'absen',
+            title: 'Absen',
+            styleClass: 'btn btn-info',
+            action: 'onAbsen'
+          },
+          {
+            name: 'product',
+            title: 'Product',
+            styleClass: 'btn btn-warning',
+            action: 'onProduct'
+          },
+          {
+            name: 'focus',
+            title: 'Focus',
+            styleClass: 'btn btn-success',
+            action: 'onFocus'
+          }
+        ]
       }
-    },
+  },
   ];
 
   public page:number = 1;
@@ -44,7 +61,11 @@ export class SalesListComponent implements OnInit {
     sorting: {columns: this.columns},
     filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered'],
-    api: {onView: this.onView.bind(this)}
+    api: {
+      onAbsen: this.onAbsen.bind(this),
+      onProduct: this.onProduct.bind(this),
+      onFocus: this.onFocus.bind(this)
+    }
   };
   
   private data:Array<Sales> = [];
@@ -57,9 +78,19 @@ export class SalesListComponent implements OnInit {
     this.getSales();
   }
 
-  public onView(data: any):void {
+  public onAbsen(data: any):void {
     console.log('view', data.row.kode_spg);
-    this.router.navigate(['/sales',data.row.kode_spg]);
+    this.router.navigate(['/report-sales','absen',data.row.kode_spg]);
+  }
+
+  public onProduct(data: any):void {
+    console.log('view', data.row.kode_spg);
+    this.router.navigate(['/report-sales','product',data.row.kode_spg]);
+  }
+
+  public onFocus(data: any):void {
+    console.log('view', data.row.kode_spg);
+    this.router.navigate(['/report-sales','focus',data.row.kode_spg]);
   }
 
   public changePage(page:any, data:Array<any> = this.data):Array<any> {

@@ -16,10 +16,32 @@ body {
   width: 100%
 }
 
+.td-width-50 { width: 50px }
+.td-width-60 { width: 60px }
+.td-width-70 { width: 70px }
+.td-width-75 { width: 75px }
+.td-width-80 { width: 80px }
+.td-width-90 { width: 90px }
+.td-width-110 { width: 110px }
+.td-width-120 { width: 120px }
+.td-width-130 { width: 130px }
+.td-width-140 { width: 140px }
+.td-width-150 { width: 150px }
+
+.table.product {
+  table-layout: fixed;
+}
+
 input.ng-valid.ng-touched {
   border-left: 5px solid green;
 }
 
 input.ng-invalid.ng-touched {
   border-left: 5px solid red;
+}
+
+.col-md-2-5 {width: 20%}
+
+.table>thead>tr>th {
+    vertical-align: middle;
 }

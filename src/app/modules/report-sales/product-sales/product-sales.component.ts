@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SalesService } from '../../services/sales.service';
-import { AbsenService } from '../../services/absen.service';
-import { Sales } from '../../models/sales';
-import { Absen } from '../../models/absen';
+import { SalesService } from '../../../services/sales.service';
+import { ProductService } from '../../../services/product.service';
+import { Sales } from '../../../models/sales';
+import { Product } from '../../../models/product'; 
 
 @Component({
-  selector: 'app-absen-sales',
-  templateUrl: './absen-sales.component.html',
+  selector: 'app-product-sales',
+  templateUrl: './product-sales.component.html',
   styles: []
 })
-export class AbsenSalesComponent implements OnInit {
+export class ProductSalesComponent implements OnInit {
   sales: Sales;
   errorMessage: string;
   errorMessageSales: string;
@@ -37,14 +37,32 @@ export class AbsenSalesComponent implements OnInit {
 
   public rows:Array<any> = [];
   public columns:Array<any> = [
-    {title:'Kode Absen', name: 'kode_absen', className: ['text-center']},
-    {title:'Selfie Masuk', name: 'selfie_masuk', className: ['text-center']},
-    {title:'Selfie Pulang', name: 'selfie_pulang', className: ['text-center']},
-    {title: 'Tanggal', name: 'tanggal', className: ['text-center']},
-    {title: 'Jam Masuk', name: 'jam_masuk', className: ['text-center']},
-    {title: 'Lokasi Masuk', name: 'lokasi_masuk', className: ['text-center']},
-    {title: 'Jam Pulang', name: 'jam_pulang', className: ['text-center']},
-    {title: 'Lokasi Pulang', name: 'lokasi_pulang', className: ['text-center']}
+    {title: 'Kode Laporan', name: 'kode_laporan', className: ['text-center','td-width-140']},
+    {title: 'Tanggal', name: 'tgl', className: ['text-center','td-width-90']},
+    {title: 'ELASTEX', name: 'ELASTEX', className: ['text-center','td-width-80']},
+    {title: 'WTB RM', name: 'WTB_RM', className: ['text-center','td-width-50']},
+    {title: 'MATEX CAT GENTENG CCM', name: 'MATEX_CAT_GENTENG_CCM', className: ['text-center','td-width-80']},
+    {title: 'MM PRIMER', name: 'MM_PRIMER', className: ['text-center','td-width-70']},
+    {title: 'STONESHIELD', name: 'STONESHIELD', className: ['text-center','td-width-110']},
+    {title: 'VINILEX TINTING', name: 'VINILEX_TINTING', className: ['text-center','td-width-70']},
+    {title: 'SPOT LESS', name: 'SPOT_LESS', className: ['text-center','td-width-60']},
+    {title: 'MM CLEAR', name: 'MM_CLEAR', className: ['text-center','td-width-60']},
+    {title: 'SPORTSKOTE CCM', name: 'SPORTSKOTE_CCM', className: ['text-center','td-width-110']},
+    {title: 'WTB SOLAREFLECT', name: 'WTB_SOLAREFLECT', className: ['text-center','td-width-120']},
+    {title: 'FLAW LESS', name: 'FLAW_LESS', className: ['text-center','td-width-60']},
+    {title: 'ROOF COATING RM', name: 'ROOF_COATING_RM', className: ['text-center','td-width-80']},
+    {title: 'TIMBERFINISH RM', name: 'TIMBERFINISH_RM', className: ['text-center','td-width-110']},
+    {title: 'BODELAC 2IN1 ANTI KARAT', name: 'BODELAC_2IN1_ANTI_KARAT', className: ['text-center','td-width-80']},
+    {title: 'VINILEX RM', name: 'VINILEX_RM', className: ['text-center','td-width-70']},
+    {title: 'MM TOP COAT', name: 'MM_TOP_COAT', className: ['text-center','td-width-50']},
+    {title: 'NIPPON 9000', name: 'NIPPON_9000', className: ['text-center','td-width-70']},
+    {title: 'SEALER SERIES', name: 'BW_SERIES', className: ['text-center','td-width-70']},
+    {title: 'WTB CCM', name: 'WTB_CCM', className: ['text-center','td-width-50']},
+    {title: 'NIPPON WOOD STAIN', name: 'NIPPON_WOOD_STAIN', className: ['text-center','td-width-70']},
+    {title: 'SATIN GLO', name: 'SATIN_GLO', className: ['text-center','td-width-60']},
+    {title: 'VPRO PPRO MATEX KIMEX TINTING', name: 'VPRO_PPRO_MATEX_KIMEX_TINTING', className: ['text-center','td-width-110']},
+    {title: 'PLATONE 800 or BEE BRAND 1000', name: 'PLATONE_800_or_BEE_BRAND_1000', className: ['text-center','td-width-110']},
+    {title: 'NP ZINC CHROMATE GREEN or BODELAC 8000 ZINC CHROMATE', name: 'NP_ZINC_CHROMATE_GREEN_or_BODELAC_8000_ZINC_CHROMATE', className: ['text-center','td-width-150']}
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
@@ -56,18 +74,16 @@ export class AbsenSalesComponent implements OnInit {
     paging: true,
     sorting: {columns: this.columns},
     filtering: {filterString: ''},
-    className: ['table-striped', 'table-bordered']
+    className: ['table-striped', 'table-bordered', 'product']
   };
 
-  private data:Array<Absen> = [];
-    
+  private data:Array<Product> = [];
+  
   constructor(
     private route: ActivatedRoute, 
     private salesService: SalesService,
-    private absenService: AbsenService
-  ) { 
-    this.length = this.data.length;
-  }
+    private productService: ProductService
+  ) { this.length = this.data.length; }
 
   ngOnInit() {
     this.getMonthYear();
@@ -195,7 +211,7 @@ export class AbsenSalesComponent implements OnInit {
     this.length = this.data.length; // this is for pagination
     this.onChangeTable(this.config);
     this.loadingAbsen = true;
-    this.absenService.getSalesAbsen(this.sales.kode_spg, this.mm, this.yy)
+    this.productService.getSalesProduct(this.sales.kode_spg, this.mm, this.yy)
       .subscribe(
         abs =>{
           this.data = abs;

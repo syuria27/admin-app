@@ -30,6 +30,10 @@ export class NavbarComponent implements OnInit {
     return this.auth.sudahLogin()
   }
 
+  get isAdmin(){
+    return this.auth.isAdmin();
+  }
+
   get sales(){
     return this.auth.getUserInfo();
   }
@@ -43,7 +47,7 @@ export class NavbarComponent implements OnInit {
       .subscribe(
         data =>{
           this.loading = false;
-          this.router.navigate(['/sales']);
+          this.router.navigate(['/home']);
         },
         err =>{
           this.loading = false;

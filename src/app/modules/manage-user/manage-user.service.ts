@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ManageUserService {
 
-  private apiUrl: string = 'http://localhost:3000/api/manage';
+  private apiUrl: string = 'http://192.168.1.10/web-api/user';
 
   constructor(private http : Http) { }
 
@@ -14,7 +14,7 @@ export class ManageUserService {
    * Get All User
    */
   getAllUsers(): Observable<User[]>{
-    return this.http.get(`${this.apiUrl}/users`)
+    return this.http.get(`${this.apiUrl}s`)
       .map(res => res.json().users)
       .map(users => {
         return users.map(user =>{
@@ -50,7 +50,7 @@ export class ManageUserService {
    * Create User
    */
   createUser(user: User): Observable<any>{
-    return this.http.post(`${this.apiUrl}/create/user`, user)
+    return this.http.post(`${this.apiUrl}/create`, user)
       .map(res => res.json())
       .catch(this.handleError);
   }
@@ -59,7 +59,7 @@ export class ManageUserService {
    * Update User
    */
   updateUser(user: User): Observable<any>{
-    return this.http.put(`${this.apiUrl}/update/user`, user)
+    return this.http.put(`${this.apiUrl}/update`, user)
     .map(res => res.json())
     .catch(this.handleError);
   }
@@ -68,7 +68,7 @@ export class ManageUserService {
    * Update Password
    */
   updatePassword(kode_spg: string, password: string): Observable<any>{
-    return this.http.put(`${this.apiUrl}/user/password`, {kode_spg, password})
+    return this.http.put(`${this.apiUrl}/password`, {kode_spg, password})
     .map(res => res.json())
     .catch(this.handleError);
   }
@@ -77,7 +77,7 @@ export class ManageUserService {
    * Update Status
    */
   updateStatus(kode_spg: string, status: number): Observable<any>{
-    return this.http.put(`${this.apiUrl}/user/password`, {kode_spg, status})
+    return this.http.put(`${this.apiUrl}/status`, {kode_spg, status})
     .map(res => res.json())
     .catch(this.handleError);
   }
@@ -87,7 +87,7 @@ export class ManageUserService {
     * Get Sales
     */
   getUser(kode_spg: string): Observable<User> {
-      return this.http.get(`${this.apiUrl}/user/${kode_spg}`)
+      return this.http.get(`${this.apiUrl}/${kode_spg}`)
         .map(res => res.json().user)
         .catch(this.handleError);
   }

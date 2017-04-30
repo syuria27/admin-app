@@ -6,7 +6,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li [routerLinkActive]="['active']"><a routerLink="/home">Home</a></li>
-      <li style="cursor:pointer" [routerLinkActive]="['active']">
+      <li *ngIf="isAdmin" style="cursor:pointer" [routerLinkActive]="['active']">
         <a dropdown class="dropdown">
           <div dropdownToggle class="dropdown-toggle">
             Manage <span class="caret"></span>
@@ -18,9 +18,8 @@
         </a>
       </li>
  
-      
-      <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/absen">Daily Absen</a></li>
-      <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/sales">Absen By Sales</a></li>
+      <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/report-sales">Report Sales</a></li>  
+      <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/absen">Absen</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" *ngIf="isLoggedIn">
       <li><a>{{sales.nama_spg}} ({{sales.depot}})</a></li>
@@ -28,7 +27,7 @@
     </ul>
 
     <ul class="navbar-form navbar-right" *ngIf="!isLoggedIn">
-      <form (ngSubmit)="login()">
+      <form (ngSubmit)="login()" #form="ngForm">
         <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
           <input [(ngModel)]="credentials.username" type="text" class="form-control" name="username" placeholder="Username" required>
@@ -40,7 +39,7 @@
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
           <input [(ngModel)]="credentials.password" type="password" class="form-control" name="password" placeholder="Password" required>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Login</button>
       </form>
     </ul>
   </div>

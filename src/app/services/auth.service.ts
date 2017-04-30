@@ -21,6 +21,19 @@ export class AuthService {
     return this.loggedIn;
   }
 
+  isAdmin(): boolean{
+    let user = JSON.parse(localStorage.getItem('userInfo'));
+    if(user){
+      if (user.hak_akses == 3) {
+        return true
+      } else {
+        return false; 
+      }
+    }else{
+      return false;
+    }
+  }
+
   
   login(username: string, password: string): Observable<Sales> {
     return this.http.post(this.authUrl, {username,password})

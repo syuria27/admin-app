@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <h2 style="margin-top:0px; text-align: center">Laporan Absen Sales</h2>
+  <h2 style="margin-top:0px; text-align: center">Laporan Product Sales</h2>
   <div *ngFor="let m of months">
     <h3 *ngIf="mm === m.val" class="text-center">{{m.name}} {{yy}}</h3>
   </div>
@@ -42,16 +42,17 @@
       </form>
     </div>
   </div>
-
+  
+  <div style="overflow-x:auto;">
   <ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns">
   </ng-table>
-
+  </div>
+  
   <div *ngIf="loadingAbsen" class="text-center">
     <spinner [size]="100" [tickness]="10"></spinner>
   </div>
 
   <alert type="danger" class="text-center" *ngIf="errorMessage"><b>{{errorMessage}}</b></alert>
-
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-6 pagination">

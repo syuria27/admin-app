@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <h2 style="margin-top:0px; text-align: center">Product Focus Sales</h2>
+  <div *ngFor="let m of months">
+    <h3 *ngIf="mm === m.val" class="text-center">{{m.name}} {{yy}}</h3>
+  </div>
+  <div *ngIf="loadingSales" class="text-center">
+    <spinner [size]="100" [tickness]="10"></spinner>
+  </div>
+  <alert type="danger" class="text-center" *ngIf="errorMessageSales"><b>{{errorMessageSales}}</b></alert>
+</div>
+<div *ngIf="sales" class="container-fluid">
+  <div class="row" style="margin-bottom: 10px">
+    <div class="col-md-4">
+      <table>
+        <tr>
+          <td width="100px">Nama Sales</td>
+          <td width="10px"> : </td>
+          <td>{{sales.nama_spg}}</td>
+        </tr>
+        <tr>
+          <td width="100px">Nama Toko</td>
+          <td width="10px"> : </td>
+          <td>{{sales.nama_toko}}</td>
+        </tr>
+        <tr>
+          <td width="100px">Depot</td>
+          <td width="10px"> : </td>
+          <td>{{sales.depot}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-8 text-right">
+      <form (ngSubmit)="search()" class="form-inline">
+        <select [(ngModel)]="mm" class="form-control" name="mm">
+           <option  *ngFor="let m of months" [ngValue]="m.val" [selected]="mm === m.val ">{{m.name}}</option>
+         </select>
+        <select [(ngModel)]="yy" class="form-control" name="yy">
+           <option  *ngFor="let y of years" [ngValue]="y" [selected]="yy === y ">{{y}}</option>
+         </select>
+        <button class="btn btn-primary form-control" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <!--<ng-table [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns">
+  </ng-table>
+
+  <div *ngIf="loadingAbsen" class="text-center">
+    <spinner [size]="100" [tickness]="10"></spinner>
+  </div>
+
+  <alert type="danger" class="text-center" *ngIf="errorMessage"><b>{{errorMessage}}</b></alert>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 pagination">
+        <a href="#" class="btn btn-primary">Total Record : {{length}}</a>
+      </div>
+      <div class="col-md-6 text-right " style="padding: 0px">
+        <pagination *ngIf="config.paging" style="margin: 0px" class="pagination" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+          [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+        </pagination>
+      </div>
+    </div>
+  </div>-->
+</div>

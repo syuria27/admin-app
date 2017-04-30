@@ -12,6 +12,8 @@ import { ListUserComponent } from './list-user/list-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { ManageUserComponent } from './manage-user.component';
 import { ManageUserService } from './manage-user.service';
+import { AdminGuard } from './../../guards/admin.guard';
+import { AuthService } from '../../services/auth.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -28,6 +30,6 @@ import 'rxjs/add/observable/throw';
     ManageUserRoutingModule
   ],
   declarations: [InputUserComponent, ListUserComponent, EditUserComponent, ManageUserComponent],
-  providers: [ManageUserService]
+  providers: [ManageUserService, AdminGuard, AuthService]
 })
 export class ManageUserModule { }

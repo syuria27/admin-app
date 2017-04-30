@@ -31,7 +31,8 @@ export class EditUserComponent implements OnInit {
   loading: boolean = false;
   loadingUser: boolean = false;
   errorMessage: string = '';
-
+  errorUpdate: string = '';
+  successUpdate: string = '';
   
 
   constructor(
@@ -49,17 +50,68 @@ export class EditUserComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this.successUpdate = data.error_msg;
           this.loading = false;
         },
         err => {
           console.log(err);
+          this.errorUpdate = err;
           this.loading = false;
         }
       );
   }
 
   updatePassword(){
-    console.log(this.password);
+    this.loading = true;
+    this.manageUserService.updatePassword(this.user.kode_spg,this.password)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.successUpdate = data.error_msg;
+          this.loading = false;
+        },
+        err => {
+          console.log(err);
+          this.errorUpdate = err;
+          this.loading = false;
+        }
+      );
+  }
+
+  nonActive(){
+    this.loading = true;
+    this.manageUserService.updateStatus(this.user.kode_spg,0)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.user.status = 0;
+          this.successUpdate = data.error_msg;
+          this.loading = false;
+        },
+        err => {
+          console.log(err);
+          this.errorUpdate = err;
+          this.loading = false;
+        }
+      );
+  }
+
+  active(){
+    this.loading = true;
+    this.manageUserService.updateStatus(this.user.kode_spg,1)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.user.status = 1;
+          this.successUpdate = data.error_msg;
+          this.loading = false;
+        },
+        err => {
+          console.log(err);
+          this.errorUpdate = err;
+          this.loading = false;
+        }
+      );
   }
 
   getUser(){
