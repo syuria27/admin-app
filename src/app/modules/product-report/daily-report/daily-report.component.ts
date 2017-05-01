@@ -1,43 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SalesService } from '../../../services/sales.service';
+import { IMyOptions, IMyDateModel} from 'mydatepicker';
+import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
-import { Sales } from '../../../models/sales';
-import { Product } from '../../../models/product'; 
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-product-sales',
-  templateUrl: './product-sales.component.html',
+  selector: 'app-daily-report',
+  templateUrl: './daily-report.component.html',
   styles: []
 })
-export class ProductSalesComponent implements OnInit {
-  sales: Sales;
+export class DailyReportComponent implements OnInit {
   errorMessage: string;
-  errorMessageSales: string;
-  loadingSales: boolean = false;
-  loadingAbsen: boolean = false;
+  loading: boolean = false;
+  date = new Date();
 
-  mm: number = 0;
-  months = [
-    { val: 1,  name: 'Januari' },
-    { val: 2,  name: 'February' },
-    { val: 3,  name: 'Maret' },
-    { val: 4,  name: 'April' },
-    { val: 5,  name: 'Mei' },
-    { val: 6,  name: 'Juni' },
-    { val: 7,  name: 'Juli' },
-    { val: 8,  name: 'Agustus' },
-    { val: 9,  name: 'September' },
-    { val: 10,  name: 'Oktober' },
-    { val: 11,  name: 'November' },
-    { val: 12,  name: 'Desember' }
-  ];
-  years: number[] =[];
-  yy : number;
+  linkExport: string = `http://localhost:81/report/export/absen_by_tanggal/${this.sales.depot}`;
+  
+  myDatePickerOptions: IMyOptions = {
+        editableMonthAndYear: false,
+        showClearDateBtn: false,
+        minYear: 2016,
+        width: '252px',
+        editableDateField: false,
+        dateFormat: 'dd - mm - yyyy',
+  };
+
+  model = { date: { 
+      year: this.date.getFullYear(), 
+      month: this.date.getMonth() + 1, 
+      day: this.date.getDate() 
+    } 
+  };
+  
+  onDateChanged(event: IMyDateModel) {
+    // event properties are: event.date, event.jsdate, event.formatted and event.epoc
+    this.refresh();
+    this.productService.getDailyProduct(`${event.date.year}-${event.date.month}-${event.date.day}`)
+      .subscribe(
+        abs =>{
+          this.data = abs;
+          this.length = this.data.length; // this is for pagination
+          this.onChangeTable(this.config);
+          this.loading = false;
+          this.errorMessage = '';
+        },error => {
+            this.errorMessage = error;
+            this.length = this.data.length; // this is for pagination
+            this.onChangeTable(this.config);
+            this.loading = false;
+        }
+      );
+  }
+
+  refresh():void {
+    this.data = [];
+    this.length = this.data.length; // this is for pagination
+    this.onChangeTable(this.config);
+    this.loading = true;
+  }
 
   public rows:Array<any> = [];
   public columns:Array<any> = [
     {title: 'Kode Laporan', name: 'kode_laporan', className: ['text-center','td-width-140']},
+    {title: 'Nama SPG', name: 'nama_spg', className: ['text-center','td-width-90']},
+    {title: 'Nama Toko', name: 'nama_toko', className: ['text-center','td-width-90']},
+    {title: 'Depot', name: 'depot', className: ['text-center','td-width-90']},
     {title: 'Tanggal', name: 'tgl', className: ['text-center','td-width-90']},
     {title: 'ELASTEX', name: 'ELASTEX', className: ['text-center','td-width-80']},
     {title: 'WTB RM', name: 'WTB_RM', className: ['text-center','td-width-50']},
@@ -78,18 +105,34 @@ export class ProductSalesComponent implements OnInit {
     filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered', 'product']
   };
-
-  private data:Array<Product> = [];
   
-  constructor(
-    private route: ActivatedRoute, 
-    private salesService: SalesService,
-    private productService: ProductService
-  ) { this.length = this.data.length; }
+  private data:Array<Product> = [];
+
+  constructor(private productService: ProductService, private auth: AuthService) {
+    this.length = this.data.length;
+   }
+
+  get sales(){
+    return this.auth.getUserInfo();
+  }
 
   ngOnInit() {
-    this.getMonthYear();
-    this.getSales();
+    this.refresh();
+    this.productService.getDailyProduct(`${this.model.date.year}-${this.model.date.month}-${this.model.date.day}`)
+      .subscribe(
+        prd =>{
+          this.data = prd;
+          this.length = this.data.length; // this is for pagination
+          this.onChangeTable(this.config);
+          this.loading = false;
+          this.errorMessage = '';
+        },error => {
+            this.errorMessage = error;
+            this.length = this.data.length; // this is for pagination
+            this.onChangeTable(this.config);
+            this.loading = false;
+        }
+      );
   }
 
   public changePage(page:any, data:Array<any> = this.data):Array<any> {
@@ -183,51 +226,4 @@ export class ProductSalesComponent implements OnInit {
   public onCellClick(data: any): any {
     console.log(data);
   }
-
-  getSales(){
-    this.loadingSales = true;
-    let kode_spg = this.route.snapshot.params['kode_spg'];
-    this.salesService.getSales(kode_spg)
-      .subscribe(
-        sales => {
-          this.sales = sales;
-          this.loadingSales = false;
-        },error =>{
-           this.errorMessageSales = error;
-           this.loadingSales = false;
-        }
-      );
-  }
-
-  getMonthYear(){
-    var today = new Date();
-    this.mm = today.getMonth()+1;
-    this.yy = today.getFullYear();        
-    for(var i = (this.yy-10); i <= this.yy; i++){
-      this.years.push(i);
-    }
-  }
-
-  search() {
-    this.data = [];
-    this.length = this.data.length; // this is for pagination
-    this.onChangeTable(this.config);
-    this.loadingAbsen = true;
-    this.productService.getSalesProduct(this.sales.kode_spg, this.mm, this.yy)
-      .subscribe(
-        prd =>{
-          this.data = prd;
-          this.length = this.data.length; // this is for pagination
-          this.onChangeTable(this.config);
-          this.loadingAbsen = false;
-          this.errorMessage = '';
-        },error => {
-            this.errorMessage = error;
-            this.length = this.data.length; // this is for pagination
-            this.onChangeTable(this.config);
-            this.loadingAbsen = false;
-        }
-      );
-  }
-
 }

@@ -1,10 +1,12 @@
 export class Product {
-    kode_laporan: string;
+    kode_laporan?: string;
     kode_spg: string;
     nama_spg: string;
     nama_toko: string;
     depot: string;
-    tanggal: string;
+    tanggal?: string;
+    bulan?: number;
+    tahun?: number;
     ELASTEX: number;
     WTB_RM: number;
     MATEX_CAT_GENTENG_CCM: number;
@@ -32,5 +34,7 @@ export class Product {
     NP_ZINC_CHROMATE_GREEN_or_BODELAC_8000_ZINC_CHROMATE: number;
     ccm: number;
     rm: number;
-    tgl: string;
+    jml_ccm: string;
+    jml_rm: string;
+    tgl?: string;
 }

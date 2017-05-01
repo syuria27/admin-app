@@ -11,16 +11,19 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { ManageUserModule } from './modules/manage-user/manage-user.module';
 import { ReportSalesModule } from './modules/report-sales/report-sales.module';
+import { ProductReportModule } from './modules/product-report/product-report.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AbsenService } from './services/absen.service';
+import { FocusService } from './services/focus.service';
 import { AbsenListComponent } from './components/absen-list/absen-list.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { Page404Component } from './components/page-404/page-404.component';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
+import { FocusListComponent } from './components/focus-list/focus-list.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +31,11 @@ import { AuthGuard } from './guards/auth.guard';
     AbsenListComponent,
     NavbarComponent,
     Page404Component,
-    HomeComponent
+    HomeComponent,
+    FocusListComponent
   ],
   imports: [
+    ProductReportModule,
     ManageUserModule,
     ReportSalesModule,
     BrowserModule,
@@ -46,7 +51,7 @@ import { AuthGuard } from './guards/auth.guard';
     ModalModule.forRoot(),
     BootstrapModalModule
   ],
-  providers: [AbsenService, AuthService, AuthGuard],
+  providers: [AbsenService, AuthService, AuthGuard, FocusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

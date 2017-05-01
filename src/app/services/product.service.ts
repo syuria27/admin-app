@@ -20,6 +20,26 @@ private apiUrl: string = 'http://192.168.1.10/web-api/product';
       .catch(this.handleError);
   }
 
+  /**
+   * Get Daily Product
+   */
+  getDailyProduct(tanggal: string): Observable<Product[]>{
+    let sales: Sales = this.auth.getUserInfo();
+    return this.http.get(`${this.apiUrl}/daily/${sales.depot}/${tanggal}`)
+      .map(res => res.json().products)
+      .catch(this.handleError);
+  }
+
+  /**
+   * Get Daily Product
+   */
+  getMonthlyProduct(bulan: number, tahun:number): Observable<Product[]>{
+    let sales: Sales = this.auth.getUserInfo();
+    return this.http.get(`${this.apiUrl}/monthly/${sales.depot}/${bulan}/${tahun}`)
+      .map(res => res.json().products)
+      .catch(this.handleError);
+  }
+
    /**
     * Handle any error from the API
     */

@@ -16,6 +16,7 @@ import { ReportSalesComponent } from './report-sales.component';
 import { ProductSalesComponent } from './product-sales/product-sales.component';
 import { FocusSalesComponent } from './focus-sales/focus-sales.component';
 import { ProductService } from './../../services/product.service';
+import { FocusService } from './../../services/focus.service';
 
 @NgModule({
   imports: [
@@ -34,6 +35,6 @@ import { ProductService } from './../../services/product.service';
     ProductSalesComponent,
     FocusSalesComponent
   ],
-  providers: [SalesService, AbsenService, ProductService]
+  providers: [SalesService, AbsenService, ProductService, FocusService]
 })
 export class ReportSalesModule { }

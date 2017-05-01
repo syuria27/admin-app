@@ -17,9 +17,20 @@
           </div>
         </a>
       </li>
- 
+      <li *ngIf="isLoggedIn" style="cursor:pointer" [routerLinkActive]="['active']">
+        <a dropdown class="dropdown">
+          <div dropdownToggle class="dropdown-toggle">
+            Product Report <span class="caret"></span>
+          </div>
+          <div *dropdownMenu class="dropdown-menu">
+            <li><a routerLink="/daily-report">Daily</a></li>
+            <li><a routerLink="/monthly-report">Monthly</a></li>
+          </div>
+        </a>
+      </li>
       <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/report-sales">Report Sales</a></li>  
       <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/absen">Absen</a></li>
+      <li [routerLinkActive]="['active']" *ngIf="isLoggedIn"><a routerLink="/focus">Focus</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right" *ngIf="isLoggedIn">
       <li><a>{{sales.nama_spg}} ({{sales.depot}})</a></li>

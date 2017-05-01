@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SalesService } from '../../../services/sales.service';
 import { ProductService } from '../../../services/product.service';
 import { Sales } from '../../../models/sales';
 import { Product } from '../../../models/product'; 
 
 @Component({
-  selector: 'app-product-sales',
-  templateUrl: './product-sales.component.html',
+  selector: 'app-monthly-report',
+  templateUrl: './monthly-report.component.html',
   styles: []
 })
-export class ProductSalesComponent implements OnInit {
-  sales: Sales;
+export class MonthlyReportComponent implements OnInit {
   errorMessage: string;
   errorMessageSales: string;
   loadingSales: boolean = false;
@@ -37,8 +34,8 @@ export class ProductSalesComponent implements OnInit {
 
   public rows:Array<any> = [];
   public columns:Array<any> = [
-    {title: 'Kode Laporan', name: 'kode_laporan', className: ['text-center','td-width-140']},
-    {title: 'Tanggal', name: 'tgl', className: ['text-center','td-width-90']},
+    {title: 'Kode SPG', name: 'kode_spg', className: ['text-center','td-width-90']},
+    {title: 'Nama SPG', name: 'nama_spg', className: ['text-center','td-width-140']},
     {title: 'ELASTEX', name: 'ELASTEX', className: ['text-center','td-width-80']},
     {title: 'WTB RM', name: 'WTB_RM', className: ['text-center','td-width-50']},
     {title: 'MATEX CAT GENTENG CCM', name: 'MATEX_CAT_GENTENG_CCM', className: ['text-center','td-width-80']},
@@ -82,14 +79,12 @@ export class ProductSalesComponent implements OnInit {
   private data:Array<Product> = [];
   
   constructor(
-    private route: ActivatedRoute, 
-    private salesService: SalesService,
     private productService: ProductService
   ) { this.length = this.data.length; }
 
   ngOnInit() {
     this.getMonthYear();
-    this.getSales();
+    this.search();
   }
 
   public changePage(page:any, data:Array<any> = this.data):Array<any> {
@@ -184,21 +179,6 @@ export class ProductSalesComponent implements OnInit {
     console.log(data);
   }
 
-  getSales(){
-    this.loadingSales = true;
-    let kode_spg = this.route.snapshot.params['kode_spg'];
-    this.salesService.getSales(kode_spg)
-      .subscribe(
-        sales => {
-          this.sales = sales;
-          this.loadingSales = false;
-        },error =>{
-           this.errorMessageSales = error;
-           this.loadingSales = false;
-        }
-      );
-  }
-
   getMonthYear(){
     var today = new Date();
     this.mm = today.getMonth()+1;
@@ -213,15 +193,17 @@ export class ProductSalesComponent implements OnInit {
     this.length = this.data.length; // this is for pagination
     this.onChangeTable(this.config);
     this.loadingAbsen = true;
-    this.productService.getSalesProduct(this.sales.kode_spg, this.mm, this.yy)
+    this.productService.getMonthlyProduct(this.mm, this.yy)
       .subscribe(
         prd =>{
           this.data = prd;
+          console.log(this.data);
           this.length = this.data.length; // this is for pagination
           this.onChangeTable(this.config);
           this.loadingAbsen = false;
           this.errorMessage = '';
         },error => {
+            console.log(error);
             this.errorMessage = error;
             this.length = this.data.length; // this is for pagination
             this.onChangeTable(this.config);
