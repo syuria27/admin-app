@@ -1,7 +1,12 @@
 <div class="container-fluid" style="margin-top: 10px">
   <div class="row">
-    <div class="col-md-9">
-      <h2 style="margin-top:0px">Sales List</h2>
+    <div class="col-md-3">
+      <a [routerLink]="['/manage-focus/create-focus']" class="btn btn-info top5" role="button">
+        <span class="glyphicon glyphicon-plus"></span> Create Focus
+      </a>
+    </div>
+    <div class="col-md-6 text-center">
+      <h2 style="margin-top:0px">Focus List</h2>
     </div>
     <div class="col-md-3 text-right">
       <input *ngIf="config.filtering" placeholder="Filter all columns" [ngTableFiltering]="config.filtering" class="form-control"

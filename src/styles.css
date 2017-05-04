@@ -45,3 +45,33 @@ input.ng-invalid.ng-touched {
 .table>thead>tr>th {
     vertical-align: middle;
 }
+
+
+img {  
+  font-family: 'Helvetica';
+  font-weight: 300;
+  line-height: 2;  
+  text-align: center;
+
+  display: block;
+  position: relative;
+}
+
+
+
+img:after {  
+  content: "Photo Selfie";
+
+  font-size: 16px;
+  font-family: FontAwesome;
+  color: #fff;
+  text-align: center;
+  display: block;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(100, 100, 100);
+}

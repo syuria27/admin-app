@@ -13,10 +13,9 @@ export class AbsenListComponent implements OnInit {
   errorMessage: string;
   loading: boolean = false;
   date = new Date();
-  linkExport: string = `http://localhost:81/report/export/absen_by_tanggal/${this.sales.depot}`;
+  linkExport: string = `http://npspgmanagement.co.id/export/absen/absen_by_tanggal/${this.sales.depot}`;
   
   myDatePickerOptions: IMyOptions = {
-        editableMonthAndYear: false,
         showClearDateBtn: false,
         minYear: 2016,
         width: '252px',

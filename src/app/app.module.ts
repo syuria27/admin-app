@@ -10,6 +10,8 @@ import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { ManageUserModule } from './modules/manage-user/manage-user.module';
+import { ManageProductModule } from './modules/manage-product/manage-product.module';
+import { ManageFocusModule } from './modules/manage-focus/manage-focus.module';
 import { ReportSalesModule } from './modules/report-sales/report-sales.module';
 import { ProductReportModule } from './modules/product-report/product-report.module';
 
@@ -35,6 +37,8 @@ import { FocusListComponent } from './components/focus-list/focus-list.component
     FocusListComponent
   ],
   imports: [
+    ManageFocusModule,
+    ManageProductModule,
     ProductReportModule,
     ManageUserModule,
     ReportSalesModule,

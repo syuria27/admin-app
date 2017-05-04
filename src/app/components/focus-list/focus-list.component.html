@@ -1,6 +1,12 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-3">
+      <a href="{{linkExport}}" class="btn btn-info" role="button" *ngIf="length">
+        Export <span class="glyphicon glyphicon-export"></span></a>
+      <button class="btn btn-info" type="button" disabled="disabled" *ngIf="!length">
+        Export <span class="glyphicon glyphicon-export"></span></button>
+    </div>
+    <div class="col-md-6 text-center">
       <h2 style="margin-top:0px">Focus List</h2>
     </div>
     <div class="col-md-3 text-right">

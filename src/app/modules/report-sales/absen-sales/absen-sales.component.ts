@@ -16,7 +16,7 @@ export class AbsenSalesComponent implements OnInit {
   errorMessageSales: string;
   loadingSales: boolean = false;
   loadingAbsen: boolean = false;
-  linkExport:string = 'http://localhost:81/report/export/absen_by_uid';
+  linkExport:string = 'http://npspgmanagement.co.id/export/absen/absen_by_uid';
 
   mm: number = 0;
   months = [

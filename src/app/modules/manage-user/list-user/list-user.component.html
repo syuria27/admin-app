@@ -27,7 +27,7 @@
   <div class="container-fluid" style="margin-top: 10px">
     <div class="row">
       <div class="col-md-6 pagination">
-        <a href="#" class="btn btn-primary">Total Record : {{length}}</a>
+        <button class="btn btn-primary" type="button">Total Record : {{length}}</button>
       </div>
       <div class="col-md-6 text-right " style="padding: 0px">
         <pagination *ngIf="config.paging" style="margin: 0px" class="pagination" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"

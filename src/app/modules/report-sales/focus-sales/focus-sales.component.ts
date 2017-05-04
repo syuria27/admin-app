@@ -16,13 +16,14 @@ export class FocusSalesComponent implements OnInit {
   errorMessageSales: string;
   loadingSales: boolean = false;
   loadingAbsen: boolean = false;
+  linkExport:string = 'http://npspgmanagement.co.id/export/focus/focus_by_uid';
 
   public rows:Array<any> = [];
   public columns:Array<any> = [
     {title: 'Kode Focus', name: 'kode_focus', className: ['text-center']},
     {title: 'Nama Product', name: 'nama_focus', className: ['text-center']},
-    {title: 'Tanggal', name: 'tanggal', className: ['text-center']},
-    {title: 'Status', name: 'status', className: ['text-center']}
+    {title: 'Status', name: 'status', className: ['text-center']},
+    {title: 'Tanggal', name: 'tanggal', className: ['text-center']}
   ];
 
   public page:number = 1;

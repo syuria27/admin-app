@@ -9,20 +9,20 @@
   <div class="row" style="margin-bottom: 10px">
     <div class="col-md-9">
       <table>
-        <tr>
-          <td width="100px">Nama Sales</td>
-          <td width="10px"> : </td>
-          <td>{{sales.nama_spg}}</td>
+        <tr height="25px">
+          <td width="100px"><b>Nama Sales</b></td>
+          <td width="10px"><b> : </b></td>
+          <td><b>{{sales.nama_spg}}</b></td>
         </tr>
-        <tr>
-          <td width="100px">Nama Toko</td>
-          <td width="10px"> : </td>
-          <td>{{sales.nama_toko}}</td>
+        <tr height="25px">
+          <td width="100px"><b>Nama Toko</b></td>
+          <td width="10px"><b> : </b></td>
+          <td><b>{{sales.nama_toko}}</b></td>
         </tr>
-        <tr>
-          <td width="100px">Depot</td>
-          <td width="10px"> : </td>
-          <td>{{sales.depot}}</td>
+        <tr height="25px">
+          <td width="100px"><b>Depot</b></td>
+          <td width="10px"><b> : </b></td>
+          <td><b>{{sales.depot}}</b></td>
         </tr>
       </table>
     </div>
@@ -30,6 +30,10 @@
     <div class="col-md-3 text-right">
       <input *ngIf="config.filtering" placeholder="Filter all columns" [ngTableFiltering]="config.filtering" class="form-control"
         (tableChanged)="onChangeTable(config)" />
+        <a href="{{linkExport}}/{{sales.kode_spg}}" class="btn btn-info top10" role="button" *ngIf="length">
+        Export <span class="glyphicon glyphicon-export"></span></a>
+      <button class="btn btn-info top10" type="button" disabled="disabled" *ngIf="!length">
+        Export <span class="glyphicon glyphicon-export"></span></button>
     </div>
   </div>
 
@@ -45,7 +49,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-6 pagination">
-        <a href="#" class="btn btn-primary">Total Record : {{length}}</a>
+        <button class="btn btn-primary" type="button">Total Record : {{length}}</button>
       </div>
       <div class="col-md-6 text-right " style="padding: 0px">
         <pagination *ngIf="config.paging" style="margin: 0px" class="pagination" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"

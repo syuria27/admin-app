@@ -1,0 +1,39 @@
+<alert type="danger" class="text-center" *ngIf="errorMessage"><b>{{errorMessage}}</b></alert>
+<div *ngIf="loadingFocus" class="text-center">
+  <spinner [size]="100" [tickness]="10"></spinner>
+</div>
+<div class="container-fluid col-md-4" *ngIf="focusList.kode_focus">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>{{focusList.kode_focus}}</h2>
+    </div>
+    <div class="col-md-4 text-right">
+      <button (click)="nonActive()" class="btn btn-danger top15" *ngIf="focusList.status">
+          <span class="glyphicon glyphicon-remove"></span> Non Active 
+      </button>
+      <button (click)="active()" class="btn btn-success top15" *ngIf="!focusList.status">
+          <span class="glyphicon glyphicon-ok"></span> Active 
+      </button>
+    </div>
+  </div>
+  <hr>
+  <form #form="ngForm" (submit)="updateData()">
+    <div class="form-group">
+      <label for="nama_focus" class="control-label">Nama Focus</label>
+      <input [(ngModel)]="focusList.nama_focus" type="text" name="nama_focus" class="form-control" required>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Update Data</button>
+      </div>
+      <div class="col-md-2 text-center">
+        <div *ngIf="loading">
+          <spinner [size]="33" [tickness]="10"></spinner>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <alert type="danger" class="text-center" *ngIf="errorUpdate"><b>{{errorUpdate}}</b></alert>
+  <alert type="success" class="text-center" *ngIf="successUpdate"><b>{{successUpdate}}</b></alert>
+</div>

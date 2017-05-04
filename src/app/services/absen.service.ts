@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AbsenService {
-  private apiUrl: string = 'http://192.168.1.10/web-api/absen';
+  private apiUrl: string = 'http://npspgmanagement.co.id:3000/api/absen';
   
   constructor(private http : Http, private auth: AuthService) { }
 
@@ -26,8 +26,8 @@ export class AbsenService {
         return absen.map(abs =>{
           return{
             kode_absen : abs.kode_absen,
-            selfie_masuk : `<img src="http://npspgmanagement.co.id/absen-api/upload/${abs.kode_absen}-M.jpeg" width="90" height="90" class="img-rounded"/>`,
-            selfie_pulang : `<img src="http://npspgmanagement.co.id/absen-api/upload/${abs.kode_absen}-P.jpeg" width="90" height="90" class="img-rounded"/>`,
+            selfie_masuk : `<img src="http://npspgmanagement.co.id:3001/selfie/${abs.kode_absen}-M.jpeg" alt= "X" width="90" height="90" class="img-rounded"/>`,
+            selfie_pulang : `<img src="http://npspgmanagement.co.id:3001/selfie/${abs.kode_absen}-P.jpeg" alt="X" width="90" height="90" class="img-rounded"/>`,
             tanggal : abs.tanggal,
             jam_masuk : abs.jam_masuk,
             lokasi_masuk : abs.lokasi_masuk,
@@ -50,8 +50,8 @@ export class AbsenService {
         return absen.map(abs =>{
           return{
             kode_absen : abs.kode_absen,
-            selfie_masuk : `<img src="http://npspgmanagement.co.id/absen-api/upload/${abs.kode_absen}-M.jpeg" width="90" height="90" class="img-rounded"/>`,
-            selfie_pulang : `<img src="http://npspgmanagement.co.id/absen-api/upload/${abs.kode_absen}-P.jpeg" width="90" height="90" class="img-rounded"/>`,
+            selfie_masuk : `<img src="http://npspgmanagement.co.id:3001/selfie/${abs.kode_absen}-M.jpeg" alt="X" width="90" height="90" class="img-rounded"/>`,
+            selfie_pulang : `<img src="http://npspgmanagement.co.id:3001/selfie/${abs.kode_absen}-P.jpeg" alt="X" width="90" height="90" class="img-rounded"/>`,
             nama_spg : abs.nama_spg,
             nama_toko : abs.nama_toko,
             depot : abs.depot,

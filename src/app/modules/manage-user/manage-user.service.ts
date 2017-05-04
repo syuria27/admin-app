@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ManageUserService {
 
-  private apiUrl: string = 'http://192.168.1.10/web-api/user';
+  private apiUrl: string = 'http://npspgmanagement.co.id:3000/api/user';
 
   constructor(private http : Http) { }
 
@@ -84,7 +84,7 @@ export class ManageUserService {
 
 
   /**
-    * Get Sales
+    * Get User
     */
   getUser(kode_spg: string): Observable<User> {
       return this.http.get(`${this.apiUrl}/${kode_spg}`)

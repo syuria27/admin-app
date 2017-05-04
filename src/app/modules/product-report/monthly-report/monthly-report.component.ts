@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { Sales } from '../../../models/sales';
 import { Product } from '../../../models/product'; 
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-monthly-report',
@@ -13,6 +14,8 @@ export class MonthlyReportComponent implements OnInit {
   errorMessageSales: string;
   loadingSales: boolean = false;
   loadingAbsen: boolean = false;
+
+  linkExport: string = `http://npspgmanagement.co.id/export/product/monthly_report/${this.sales.depot}`;
 
   mm: number = 0;
   months = [
@@ -78,10 +81,13 @@ export class MonthlyReportComponent implements OnInit {
 
   private data:Array<Product> = [];
   
-  constructor(
-    private productService: ProductService
-  ) { this.length = this.data.length; }
+  constructor(private productService: ProductService, private auth: AuthService) {
+    this.length = this.data.length;
+   }
 
+  get sales(){
+    return this.auth.getUserInfo();
+  }
   ngOnInit() {
     this.getMonthYear();
     this.search();

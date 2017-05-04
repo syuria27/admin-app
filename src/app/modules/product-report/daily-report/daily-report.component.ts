@@ -14,10 +14,9 @@ export class DailyReportComponent implements OnInit {
   loading: boolean = false;
   date = new Date();
 
-  linkExport: string = `http://localhost:81/report/export/absen_by_tanggal/${this.sales.depot}`;
+  linkExport: string = `http://npspgmanagement.co.id/export/product/daily_report/${this.sales.depot}`;
   
   myDatePickerOptions: IMyOptions = {
-        editableMonthAndYear: false,
         showClearDateBtn: false,
         minYear: 2016,
         width: '252px',

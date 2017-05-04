@@ -16,6 +16,7 @@ export class ProductSalesComponent implements OnInit {
   errorMessageSales: string;
   loadingSales: boolean = false;
   loadingAbsen: boolean = false;
+  linkExport: string = 'http://npspgmanagement.co.id/export/product/report_by_uid';
 
   mm: number = 0;
   months = [

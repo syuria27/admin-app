@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Focus } from '../../models/focus';
 import { FocusService } from '../../services/focus.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-focus-list',
@@ -10,6 +11,11 @@ import { FocusService } from '../../services/focus.service';
 export class FocusListComponent implements OnInit {
   errorMessage: string;
   loading: boolean = false;
+  linkExport: string = `http://npspgmanagement.co.id/export/focus/all_focus/${this.sales.depot}`;
+
+  get sales(){
+    return this.auth.getUserInfo();
+  }
   
   public rows:Array<any> = [];
   public columns:Array<any> = [
@@ -56,7 +62,7 @@ export class FocusListComponent implements OnInit {
 
   private data:Array<Focus> = [];
 
-  constructor(private focusService: FocusService) {
+  constructor(private focusService: FocusService, private auth: AuthService) {
     this.length = this.data.length;
    }
 
