@@ -4,8 +4,8 @@ import { FocusService } from '../../../services/focus.service';
 import { FocusList } from '../../../models/focus-list';
 
 @Component({
-  selector: 'app-edit-Focus',
-  templateUrl: './edit-Focus.component.html',
+  selector: 'app-edit-focus',
+  templateUrl: './edit-focus.component.html',
   styles: []
 })
 export class EditFocusComponent implements OnInit {
