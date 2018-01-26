@@ -15,7 +15,7 @@ export class DailyReportComponent implements OnInit {
   date = new Date();
 
   linkExport: string = `http://npspgmanagement.co.id/export/product/daily_report/${this.sales.depot}`;
-  
+
   myDatePickerOptions: IMyOptions = {
         showClearDateBtn: false,
         minYear: 2016,
@@ -24,13 +24,13 @@ export class DailyReportComponent implements OnInit {
         dateFormat: 'dd - mm - yyyy',
   };
 
-  model = { date: { 
-      year: this.date.getFullYear(), 
-      month: this.date.getMonth() + 1, 
-      day: this.date.getDate() 
-    } 
+  model = { date: {
+      year: this.date.getFullYear(),
+      month: this.date.getMonth() + 1,
+      day: this.date.getDate()
+    }
   };
-  
+
   onDateChanged(event: IMyDateModel) {
     // event properties are: event.date, event.jsdate, event.formatted and event.epoc
     this.refresh();
@@ -82,7 +82,8 @@ export class DailyReportComponent implements OnInit {
     {title: 'VINILEX RM', name: 'VINILEX_RM', className: ['text-center','td-width-70']},
     {title: 'MM TOP COAT', name: 'MM_TOP_COAT', className: ['text-center','td-width-50']},
     {title: 'NIPPON 9000', name: 'NIPPON_9000', className: ['text-center','td-width-70']},
-    {title: 'SEALER SERIES', name: 'BW_SERIES', className: ['text-center','td-width-70']},
+    {title: 'SEALER SERIES', name: 'SEALER_SERIES', className: ['text-center','td-width-70']},
+    {title: 'BW SERIES', name: 'BW_SERIES', className: ['text-center','td-width-70']},
     {title: 'WTB CCM', name: 'WTB_CCM', className: ['text-center','td-width-50']},
     {title: 'NIPPON WOOD STAIN', name: 'NIPPON_WOOD_STAIN', className: ['text-center','td-width-70']},
     {title: 'SATIN GLO', name: 'SATIN_GLO', className: ['text-center','td-width-60']},
@@ -104,7 +105,7 @@ export class DailyReportComponent implements OnInit {
     filtering: {filterString: ''},
     className: ['table-striped', 'table-bordered', 'product']
   };
-  
+
   private data:Array<Product> = [];
 
   constructor(private productService: ProductService, private auth: AuthService) {

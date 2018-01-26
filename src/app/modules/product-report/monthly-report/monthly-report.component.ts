@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { Sales } from '../../../models/sales';
-import { Product } from '../../../models/product'; 
+import { Product } from '../../../models/product';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -56,7 +56,8 @@ export class MonthlyReportComponent implements OnInit {
     {title: 'VINILEX RM', name: 'VINILEX_RM', className: ['text-center','td-width-70']},
     {title: 'MM TOP COAT', name: 'MM_TOP_COAT', className: ['text-center','td-width-50']},
     {title: 'NIPPON 9000', name: 'NIPPON_9000', className: ['text-center','td-width-70']},
-    {title: 'SEALER SERIES', name: 'BW_SERIES', className: ['text-center','td-width-70']},
+    {title: 'SEALER SERIES', name: 'SEALER_SERIES', className: ['text-center','td-width-70']},
+    {title: 'BW SERIES', name: 'BW_SERIES', className: ['text-center','td-width-70']},
     {title: 'WTB CCM', name: 'WTB_CCM', className: ['text-center','td-width-50']},
     {title: 'NIPPON WOOD STAIN', name: 'NIPPON_WOOD_STAIN', className: ['text-center','td-width-70']},
     {title: 'SATIN GLO', name: 'SATIN_GLO', className: ['text-center','td-width-60']},
@@ -80,7 +81,7 @@ export class MonthlyReportComponent implements OnInit {
   };
 
   private data:Array<Product> = [];
-  
+
   constructor(private productService: ProductService, private auth: AuthService) {
     this.length = this.data.length;
    }
@@ -188,7 +189,7 @@ export class MonthlyReportComponent implements OnInit {
   getMonthYear(){
     var today = new Date();
     this.mm = today.getMonth()+1;
-    this.yy = today.getFullYear();        
+    this.yy = today.getFullYear();
     for(var i = (this.yy-10); i <= this.yy; i++){
       this.years.push(i);
     }
